@@ -12,12 +12,7 @@
 
 <body>
 
-    <h1 class="text-primary">Names:</h1>
-    <ul>
-        @foreach ($names as $name)
-            <li>{{ $name }}</li>
-        @endforeach
-    </ul>
+    <h1 class="text-primary">I am home BRO {{ $name }}</h1>
     <a href="{{ route('login') }}">Login</a>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
