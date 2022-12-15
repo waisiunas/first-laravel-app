@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\auth\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostsController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -106,3 +107,8 @@ Route::get('/register',[AuthController::class, 'register_view'])->name('register
 Route::get('/users', [UsersController::class, 'index'])->name('show_users');
 Route::get('/user/create', [UsersController::class, 'create'])->name('create_user');
 Route::post('/user/create', [UsersController::class, 'store']);
+
+Route::get('/user/{id}/edit', [UsersController::class, 'edit'])->name('edit_user');
+Route::post('/user/{id}/edit', [UsersController::class, 'update']);
+
+Route::post('/user/{id}/delete', [UsersController::class, 'destroy'])->name('delete_user');

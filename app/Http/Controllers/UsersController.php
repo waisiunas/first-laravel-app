@@ -41,6 +41,18 @@ class UsersController extends Controller
             'email' => ['required'],
             'password' => ['required']
         ]);
+
+        $result = DB::table('users')->insert([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => md5($request->password),
+        ]);
+
+        if ($result) {
+            return back()->with('success', 'Magic has been spelled');
+        } else {
+            return back()->with('failed', 'Magic has failed to spell');
+        }
     }
 
     /**
@@ -62,7 +74,8 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = DB::table('users')->find($id);
+        return view('users.edit', ['user' => $user]);
     }
 
     /**
@@ -74,7 +87,21 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => ['required'],
+            'email' => ['required']
+        ]);
+
+        $result = DB::table('users')->whereId($id)->update([
+            'name' => $request->name,
+            'email' => $request->email,
+        ]);
+
+        if ($result) {
+            return redirect()->route('edit_user', $id)->with('success', 'Magic has been spelled');
+        } else {
+            return redirect()->route('edit_user', $id)->with('failed', 'Magic has failed to spell');
+        }
     }
 
     /**
@@ -83,8 +110,15 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+
+        $result = DB::table('users')->whereId($id)->delete();
+
+        if ($result) {
+            return redirect()->route('show_users')->with('success', 'Magic has been spelled');
+        } else {
+            return redirect()->route('show_users')->with('failed', 'Magic has failed to spell');
+        }
     }
 }

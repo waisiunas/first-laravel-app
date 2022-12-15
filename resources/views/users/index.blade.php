@@ -14,6 +14,9 @@
             </div>
         </div>
         <div class="card-body">
+
+            @include('paritials.alerts')
+
             @if (count($users) > 0)
                 <table class="table table-bordered">
                     <thead>
@@ -31,8 +34,10 @@
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->created_at }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-primary">Edit</a>
-                                    <a href="#" class="btn btn-danger">Delete</a>
+                                    <a href="{{ route('edit_user', $user->id) }}" class="btn btn-primary">Edit</a>
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="deleteUser({{ $user->id }})">
+                                        Delete
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
@@ -46,4 +51,15 @@
 
         </div>
     </div>
+
+    @include('paritials.modal')
+
+    <script>
+        function deleteUser(id) {
+            const deleteForm = document.getElementById('delete-form');
+            let route = "{{ route('delete_user', ':id') }}";
+            route = route.replace(':id', id);
+            deleteForm.setAttribute('action', route);
+        }
+    </script>
 @endsection
