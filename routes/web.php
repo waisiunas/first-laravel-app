@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\auth\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\DB;
@@ -112,3 +113,14 @@ Route::get('/user/{id}/edit', [UsersController::class, 'edit'])->name('edit_user
 Route::post('/user/{id}/edit', [UsersController::class, 'update']);
 
 Route::post('/user/{id}/delete', [UsersController::class, 'destroy'])->name('delete_user');
+
+Route::get('/posts', [PostController::class, 'index'])->name('show_posts');
+Route::get('/post/create', [PostController::class, 'create'])->name('create_post');
+Route::post('/post/create', [PostController::class, 'store']);
+
+Route::get('/post/{post}/show', [PostController::class, 'show'])->name('single_post');
+
+Route::get('/post/{post}/edit', [PostController::class, 'edit'])->name('edit_post');
+Route::post('/post/{post}/edit', [PostController::class, 'update']);
+
+Route::post('/post/{post}/delete', [PostController::class, 'destroy'])->name('delete_post');
